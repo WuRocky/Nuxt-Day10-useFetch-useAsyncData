@@ -10,20 +10,29 @@ const { id } = route.params;
 const roomObject = ref({});
 const apiUrl = `https://nuxr3.zeabur.app/api/v1/rooms/${id}`;
 
-fetch(apiUrl)
-  .then(function (response) {
-    if (!response.ok) {
-      throw new Error("取得房型資料失敗");
-    }
-    return response.json();
-  })
-  .then(function (room) {
-    const { result } = room;
-    roomObject.value = result;
-  })
-  .catch((error) => {
-    console.error("發生錯誤:", error);
-  });
+// fetch(apiUrl)
+//   .then(function (response) {
+//     if (!response.ok) {
+//       throw new Error("取得房型資料失敗");
+//     }
+//     return response.json();
+//   })
+//   .then(function (room) {
+//     const { result } = room;
+//     roomObject.value = result;
+//   })
+//   .catch((error) => {
+//     console.error("發生錯誤:", error);
+//   });
+const {data} = await useFetch(apiUrl)
+
+
+if(data.value) {
+  console.log(data.value)
+  roomObject.value = data.value.result
+}
+
+
 
 const isProvide = function (isProvideBoolean = false) {
   return isProvideBoolean ? "提供" : "未提供";
